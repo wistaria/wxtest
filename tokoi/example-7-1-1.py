@@ -1,0 +1,64 @@
+import sys
+import wx
+from wx import glcanvas
+from OpenGL.GL import *
+
+class MyCanvas(glcanvas.GLCanvas):
+    def __init__(self, parent):
+        super(MyCanvas, self).__init__(parent, -1)
+        self.context = glcanvas.GLContext(self)
+        self.initialized = False
+        self.size = None
+        self.Bind(wx.EVT_SIZE, self.OnSize)
+        self.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.Bind(wx.EVT_LEFT_DOWN, self.OnMouseDown)
+        self.Bind(wx.EVT_LEFT_UP, self.OnMouseUp)
+        self.Bind(wx.EVT_MOTION, self.OnMouseMotion)
+
+    def InitGL(self):
+        glClearColor(0, 0, 0, 1)
+
+    def OnSize(self, event):
+        if (self.size == None):
+            self.size = self.GetClientSize()
+        w, h = self.size
+        glViewport(0, 0, w, h)
+        glLoadIdentity()
+        glOrtho(-w/200.0, w/200.0, -h/200.0, h/200.0, -1.0, 1.0)
+        event.Skip()
+        
+    def OnPaint(self, event):
+        self.SetCurrent(self.context)
+        if not self.initialized:
+            self.InitGL()
+            self.initialized = True
+        glClear(GL_COLOR_BUFFER_BIT)
+        glBegin(GL_POLYGON)
+        glColor3d(1.0, 0.0, 0.0) # red
+        glVertex2d(-0.9, -0.9)
+        glColor3d(0.0, 1.0, 0.0) # green
+        glVertex2d(0.9, -0.9)
+        glColor3d(0.0, 0.0, 1.0) # blue
+        glVertex2d(0.9, 0.9)
+        glColor3d(1.0, 1.0, 0.0) # yellow
+        glVertex2d(-0.9, 0.9)
+        glEnd()
+        glFlush()
+        self.SwapBuffers()
+
+    def OnMouseDown(self, event):
+        print "OnMouseDown"
+
+    def OnMouseUp(self, event):
+        print "OnMouseUp"
+
+    def OnMouseMotion(self, event):
+        print "OnMouseMotion"
+
+if __name__ == '__main__':
+    app = wx.App()
+    frame = wx.Frame(None, -1, sys.argv[0], pos = (100,100), size=(320,240))
+    canvas = MyCanvas(frame)
+    frame.Show()
+    app.MainLoop()
+    app.Destroy()
