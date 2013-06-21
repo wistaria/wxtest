@@ -8,7 +8,6 @@ class MyCanvas(glcanvas.GLCanvas):
         super(MyCanvas, self).__init__(parent, -1)
         self.context = glcanvas.GLContext(self)
         self.initialized = False
-        self.size = None
         self.Bind(wx.EVT_SIZE, self.OnSize)
         self.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_LEFT_DOWN, self.OnMouseLeftDown)
@@ -22,13 +21,10 @@ class MyCanvas(glcanvas.GLCanvas):
         glClearColor(0, 0, 0, 1)
 
     def OnSize(self, event):
-        if (self.size == None):
-            self.size = self.GetClientSize()
-        w, h = self.size
+        w, h = self.GetClientSize()
         glViewport(0, 0, w, h)
         glLoadIdentity()
         glOrtho(-w/200.0, w/200.0, -h/200.0, h/200.0, -1.0, 1.0)
-        event.Skip()
         
     def OnPaint(self, event):
         self.SetCurrent(self.context)
@@ -36,16 +32,6 @@ class MyCanvas(glcanvas.GLCanvas):
             self.InitGL()
             self.initialized = True
         glClear(GL_COLOR_BUFFER_BIT)
-        glBegin(GL_POLYGON)
-        glColor3d(1.0, 0.0, 0.0) # red
-        glVertex2d(-0.9, -0.9)
-        glColor3d(0.0, 1.0, 0.0) # green
-        glVertex2d(0.9, -0.9)
-        glColor3d(0.0, 0.0, 1.0) # blue
-        glVertex2d(0.9, 0.9)
-        glColor3d(1.0, 1.0, 0.0) # yellow
-        glVertex2d(-0.9, 0.9)
-        glEnd()
         glFlush()
         self.SwapBuffers()
 
