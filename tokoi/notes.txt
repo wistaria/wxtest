@@ -1,0 +1,4 @@
+・デフォルトでは、ダブルバッファモードになる。
+  シングルバッファモードを使うには、空の attribList を渡す
+
+    wx.glcanvas.GLCanvas.__init__(parent, -1, attribList=[])

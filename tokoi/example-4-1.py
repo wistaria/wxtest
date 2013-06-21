@@ -4,7 +4,7 @@ from wx import glcanvas
 
 class MyCanvas(glcanvas.GLCanvas):
     def __init__(self, parent):
-        super(MyCanvas, self).__init__(parent, -1)
+        super(MyCanvas, self).__init__(parent, -1, attribList=[])
 
 if __name__ == '__main__':
     app = wx.App()

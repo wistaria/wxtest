@@ -5,7 +5,7 @@ from OpenGL.GL import *
 
 class MyCanvas(glcanvas.GLCanvas):
     def __init__(self, parent):
-        super(MyCanvas, self).__init__(parent, -1)
+        super(MyCanvas, self).__init__(parent, -1, attribList=[])
         self.context = glcanvas.GLContext(self)
         self.initialized = False
         self.Bind(wx.EVT_SIZE, self.OnSize)
@@ -25,7 +25,6 @@ class MyCanvas(glcanvas.GLCanvas):
             self.initialized = True
         glClear(GL_COLOR_BUFFER_BIT)
         glFlush()
-        self.SwapBuffers()
 
 if __name__ == '__main__':
     app = wx.App()

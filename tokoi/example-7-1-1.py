@@ -5,7 +5,7 @@ from OpenGL.GL import *
 
 class MyCanvas(glcanvas.GLCanvas):
     def __init__(self, parent):
-        super(MyCanvas, self).__init__(parent, -1)
+        super(MyCanvas, self).__init__(parent, -1, attribList=[])
         self.context = glcanvas.GLContext(self)
         self.initialized = False
         self.Bind(wx.EVT_SIZE, self.OnSize)
@@ -18,7 +18,7 @@ class MyCanvas(glcanvas.GLCanvas):
         self.Bind(wx.EVT_RIGHT_UP, self.OnMouseRightUp)
 
     def InitGL(self):
-        glClearColor(0, 0, 0, 1)
+        glClearColor(1, 1, 1, 1)
 
     def OnSize(self, event):
         w, h = self.GetClientSize()
@@ -32,7 +32,6 @@ class MyCanvas(glcanvas.GLCanvas):
             self.initialized = True
         glClear(GL_COLOR_BUFFER_BIT)
         glFlush()
-        self.SwapBuffers()
 
     def OnMouseLeftDown(self, event):
         print "left down"
@@ -54,7 +53,7 @@ class MyCanvas(glcanvas.GLCanvas):
 
 if __name__ == '__main__':
     app = wx.App()
-    frame = wx.Frame(None, -1, sys.argv[0], pos=(100,100), size=(320,240))
+    frame = wx.Frame(None, -1, sys.argv[0])
     canvas = MyCanvas(frame)
     frame.Show()
     app.MainLoop()

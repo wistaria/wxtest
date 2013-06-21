@@ -12,7 +12,9 @@ class MyCanvas(glcanvas.GLCanvas):
         self.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_LEFT_DOWN, self.OnMouseLeftDown)
         self.Bind(wx.EVT_LEFT_UP, self.OnMouseLeftUp)
+        self.Bind(wx.EVT_MOTION, self.OnMouseMotion)
         self.lines = []
+        self.rubberband = False
 
     def InitGL(self):
         glClearColor(1, 1, 1, 1)
@@ -50,6 +52,29 @@ class MyCanvas(glcanvas.GLCanvas):
         glVertex2iv(stop)
         glEnd()
         glFlush()
+        self.rubberband = False
+
+    def OnMouseMotion(self, event):
+        if event.Dragging() and event.LeftIsDown():
+            glEnable(GL_COLOR_LOGIC_OP)
+            glLogicOp(GL_INVERT)
+
+            glBegin(GL_LINES)
+            if (self.rubberband):
+                glVertex2iv(self.start)
+                glVertex2iv(self.stop)
+
+            x, y = event.GetPosition()
+            self.stop = [x, y]
+            glVertex2iv(self.start)
+            glVertex2iv(self.stop)
+            glEnd()
+            glFlush()
+
+            glLogicOp(GL_COPY)
+            glDisable(GL_COLOR_LOGIC_OP)
+
+            self.rubberband = True
 
 if __name__ == '__main__':
     app = wx.App()
