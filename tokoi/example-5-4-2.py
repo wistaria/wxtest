@@ -29,11 +29,14 @@ class GLFrame(wx.Frame):
     def OnDraw(self):
         self.canvas.SetCurrent(self.context)
         glClear(GL_COLOR_BUFFER_BIT)
-        glColor3d(1.0, 0.0, 0.0)
-        glBegin(GL_LINE_LOOP)
+        glBegin(GL_POLYGON)
+        glColor3d(1.0, 0.0, 0.0) # red
         glVertex2d(-0.9, -0.9)
+        glColor3d(0.0, 1.0, 0.0) # green
         glVertex2d(0.9, -0.9)
+        glColor3d(0.0, 0.0, 1.0) # blue
         glVertex2d(0.9, 0.9)
+        glColor3d(1.0, 1.0, 0.0) # yellow
         glVertex2d(-0.9, 0.9)
         glEnd()
         glFlush()
