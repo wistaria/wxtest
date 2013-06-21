@@ -10,22 +10,24 @@ class GLFrame(wx.Frame):
                  style=wx.DEFAULT_FRAME_STYLE, name='frame'):
         super(GLFrame, self).__init__(parent, id, title, pos, size, style, name)
         self.canvas = glcanvas.GLCanvas(self)
-        self.context = glcanvas.GLContext(self.canvas)
         self.initialized = False
-
         self.Bind(wx.EVT_PAINT, self.OnPaint)
 
-    def OnPaint(self, event):
+    def InitGL(self):
+        self.context = glcanvas.GLContext(self.canvas)
         self.canvas.SetCurrent(self.context)
+        glClearColor(1, 1, 1, 1)
+        width, height = self.GetClientSize()
+        glViewport(0, 0, width, height)
+
+    def OnPaint(self, event):
         if not self.initialized:
             self.InitGL()
             self.initialized = True
         self.OnDraw()
         
-    def InitGL(self):
-        glClearColor(1, 1, 1, 1)
-
     def OnDraw(self):
+        self.canvas.SetCurrent(self.context)
         glClear(GL_COLOR_BUFFER_BIT)
         glFlush()
         self.canvas.SwapBuffers()
