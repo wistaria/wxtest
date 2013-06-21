@@ -24,7 +24,6 @@ class MyCanvas(glcanvas.GLCanvas):
         w, h = self.GetClientSize()
         glViewport(0, 0, w, h)
         glLoadIdentity()
-        glOrtho(-w/200.0, w/200.0, -h/200.0, h/200.0, -1.0, 1.0)
         
     def OnPaint(self, event):
         self.SetCurrent(self.context)
