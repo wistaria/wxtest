@@ -11,9 +11,12 @@ class MyCanvas(glcanvas.GLCanvas):
         self.size = None
         self.Bind(wx.EVT_SIZE, self.OnSize)
         self.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.Bind(wx.EVT_LEFT_DOWN, self.OnMouseDown)
-        self.Bind(wx.EVT_LEFT_UP, self.OnMouseUp)
-        self.Bind(wx.EVT_MOTION, self.OnMouseMotion)
+        self.Bind(wx.EVT_LEFT_DOWN, self.OnMouseLeftDown)
+        self.Bind(wx.EVT_LEFT_UP, self.OnMouseLeftUp)
+        self.Bind(wx.EVT_MIDDLE_DOWN, self.OnMouseMiddleDown)
+        self.Bind(wx.EVT_MIDDLE_UP, self.OnMouseMiddleUp)
+        self.Bind(wx.EVT_RIGHT_DOWN, self.OnMouseRightDown)
+        self.Bind(wx.EVT_RIGHT_UP, self.OnMouseRightUp)
 
     def InitGL(self):
         glClearColor(0, 0, 0, 1)
@@ -46,18 +49,27 @@ class MyCanvas(glcanvas.GLCanvas):
         glFlush()
         self.SwapBuffers()
 
-    def OnMouseDown(self, event):
-        print "OnMouseDown"
+    def OnMouseLeftDown(self, event):
+        print "left down"
 
-    def OnMouseUp(self, event):
-        print "OnMouseUp"
+    def OnMouseLeftUp(self, event):
+        print "left up"
 
-    def OnMouseMotion(self, event):
-        print "OnMouseMotion"
+    def OnMouseMiddleDown(self, event):
+        print "middle down"
+
+    def OnMouseMiddleUp(self, event):
+        print "middle up"
+
+    def OnMouseRightDown(self, event):
+        print "right down"
+
+    def OnMouseRightUp(self, event):
+        print "right up"
 
 if __name__ == '__main__':
     app = wx.App()
-    frame = wx.Frame(None, -1, sys.argv[0], pos = (100,100), size=(320,240))
+    frame = wx.Frame(None, -1, sys.argv[0], pos=(100,100), size=(320,240))
     canvas = MyCanvas(frame)
     frame.Show()
     app.MainLoop()

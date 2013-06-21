@@ -2,17 +2,14 @@ import sys
 import wx
 from wx import glcanvas
 
-class GLFrame(wx.Frame):
-    """A simple class for using OpenGL with wxPython.
-    """
-    def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.DEFAULT_FRAME_STYLE, name='frame'):
-        super(GLFrame, self).__init__(parent, id, title, pos, size, style, name)
-        self.canvas = glcanvas.GLCanvas(self)
+class MyCanvas(glcanvas.GLCanvas):
+    def __init__(self, parent):
+        super(MyCanvas, self).__init__(parent, -1)
 
 if __name__ == '__main__':
     app = wx.App()
-    frame = GLFrame(None, -1, sys.argv[0])
+    frame = wx.Frame(None, -1, sys.argv[0])
+    canvas = MyCanvas(frame)
     frame.Show()
     app.MainLoop()
     app.Destroy()
