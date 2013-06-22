@@ -79,7 +79,8 @@ class MyCanvas(glcanvas.GLCanvas):
 
     def OnKeyDown(self, event):    
         keycode = event.GetKeyCode()
-        print keycode
+        if keycode == 0x51 or keycode == 0x1b:
+            wx.Exit()
             
 if __name__ == '__main__':
     app = wx.App()
