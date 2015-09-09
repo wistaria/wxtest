@@ -19,33 +19,36 @@ class MyCanvas(glcanvas.GLCanvas):
         w, h = self.GetClientSize()
         glViewport(0, 0, w, h)
         glLoadIdentity()
+        event.Skip()
         
     def OnPaint(self, event):
         self.SetCurrent(self.context)
         if not self.initialized:
             self.InitGL()
             self.initialized = True
+        self.OnSize(event)
         glClear(GL_COLOR_BUFFER_BIT)
         glFlush()
-        self.OnSize(event)
-        
+        event.Skip()
+
     def OnMouse(self, event):
-        if (event.IsButton()):
+        if event.IsButton():
             button = event.GetButton()
-            if (button == wx.MOUSE_BTN_LEFT):
+            if button == wx.MOUSE_BTN_LEFT:
                 print "left",
-            elif (button == wx.MOUSE_BTN_MIDDLE):
+            elif button == wx.MOUSE_BTN_MIDDLE:
                 print "middle",
-            elif (button == wx.MOUSE_BTN_RIGHT):
+            elif button == wx.MOUSE_BTN_RIGHT:
                 print "right",
             print "is",
-            if (event.ButtonUp()):
+            if event.ButtonUp():
                 print "up",
-            elif (event.ButtonDown()):
+            elif event.ButtonDown():
                 print "down",
             (x, y) = event.GetPosition()
             print "at (%d, %d)" % (x, y)
-            
+        event.Skip()
+
 if __name__ == '__main__':
     app = wx.App()
     frame = wx.Frame(None, -1, sys.argv[0], pos=(100,100), size=(320,240))

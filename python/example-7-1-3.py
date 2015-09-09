@@ -21,12 +21,14 @@ class MyCanvas(glcanvas.GLCanvas):
         glViewport(0, 0, w, h)
         glLoadIdentity()
         glOrtho(-0.5, w - 0.5, h - 0.5, -0.5, -1.0, 1.0);
+        event.Skip()
         
     def OnPaint(self, event):
         self.SetCurrent(self.context)
         if not self.initialized:
             self.InitGL()
             self.initialized = True
+        self.OnSize(event)
         glClear(GL_COLOR_BUFFER_BIT)
         glColor3d(0.0, 0.0, 0.0);
         glBegin(GL_LINES);
@@ -34,10 +36,10 @@ class MyCanvas(glcanvas.GLCanvas):
             glVertex2iv(p);
         glEnd();
         glFlush()
-        self.OnSize(event)
+        event.Skip()
 
     def OnMouse(self, event):
-        if (event.IsButton() and event.GetButton() == wx.MOUSE_BTN_LEFT):
+        if event.IsButton() and event.GetButton() == wx.MOUSE_BTN_LEFT:
             x, y = event.GetPosition()
             self.point.append([x, y])
             if (event.ButtonUp()):
@@ -47,6 +49,7 @@ class MyCanvas(glcanvas.GLCanvas):
                 glVertex2iv(self.point[-1])
                 glEnd()
                 glFlush()
+        event.Skip()
 
 if __name__ == '__main__':
     app = wx.App()

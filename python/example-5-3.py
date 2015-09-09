@@ -17,12 +17,14 @@ class MyCanvas(glcanvas.GLCanvas):
     def OnSize(self, event):
         w, h = self.GetClientSize()
         glViewport(0, 0, w, h)
+        event.Skip()
         
     def OnPaint(self, event):
         self.SetCurrent(self.context)
         if not self.initialized:
             self.InitGL()
             self.initialized = True
+        self.OnSize(event)
         glClear(GL_COLOR_BUFFER_BIT)
         glColor3d(1.0, 0.0, 0.0)
         glBegin(GL_LINE_LOOP)
@@ -32,6 +34,7 @@ class MyCanvas(glcanvas.GLCanvas):
         glVertex2d(-0.9, 0.9)
         glEnd()
         glFlush()
+        event.Skip()
 
 if __name__ == '__main__':
     app = wx.App()
