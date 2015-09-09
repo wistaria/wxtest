@@ -12,7 +12,7 @@ class MyCanvas(glcanvas.GLCanvas):
         self.Bind(wx.EVT_PAINT, self.OnPaint)
 
     def InitGL(self):
-        glClearColor(0, 0, 0, 1)
+        glClearColor(1.0, 1.0, 1.0, 1.0)
 
     def OnSize(self, event):
         w, h = self.GetClientSize()
@@ -37,6 +37,7 @@ class MyCanvas(glcanvas.GLCanvas):
         glVertex2d(-0.9, 0.9)
         glEnd()
         glFlush()
+        self.OnSize(event)
 
 if __name__ == '__main__':
     app = wx.App()

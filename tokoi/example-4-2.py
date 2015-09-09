@@ -12,7 +12,7 @@ class MyCanvas(glcanvas.GLCanvas):
         self.Bind(wx.EVT_PAINT, self.OnPaint)
 
     def InitGL(self):
-        glClearColor(1, 1, 1, 1)
+        glClearColor(0.0, 0.0, 1.0, 1.0)
 
     def OnSize(self, event):
         w, h = self.GetClientSize()
@@ -28,7 +28,7 @@ class MyCanvas(glcanvas.GLCanvas):
 
 if __name__ == '__main__':
     app = wx.App()
-    frame = wx.Frame(None, -1, sys.argv[0])
+    frame = wx.Frame(None, -1, sys.argv[0], size=(300,300))
     canvas = MyCanvas(frame)
     frame.Show()
     app.MainLoop()

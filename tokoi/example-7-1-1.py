@@ -10,15 +10,10 @@ class MyCanvas(glcanvas.GLCanvas):
         self.initialized = False
         self.Bind(wx.EVT_SIZE, self.OnSize)
         self.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.Bind(wx.EVT_LEFT_DOWN, self.OnMouseLeftDown)
-        self.Bind(wx.EVT_LEFT_UP, self.OnMouseLeftUp)
-        self.Bind(wx.EVT_MIDDLE_DOWN, self.OnMouseMiddleDown)
-        self.Bind(wx.EVT_MIDDLE_UP, self.OnMouseMiddleUp)
-        self.Bind(wx.EVT_RIGHT_DOWN, self.OnMouseRightDown)
-        self.Bind(wx.EVT_RIGHT_UP, self.OnMouseRightUp)
+        self.Bind(wx.EVT_MOUSE_EVENTS, self.OnMouse)
 
     def InitGL(self):
-        glClearColor(1, 1, 1, 1)
+        glClearColor(1.0, 1.0, 1.0, 1.0)
 
     def OnSize(self, event):
         w, h = self.GetClientSize()
@@ -32,28 +27,28 @@ class MyCanvas(glcanvas.GLCanvas):
             self.initialized = True
         glClear(GL_COLOR_BUFFER_BIT)
         glFlush()
-
-    def OnMouseLeftDown(self, event):
-        print "left down"
-
-    def OnMouseLeftUp(self, event):
-        print "left up"
-
-    def OnMouseMiddleDown(self, event):
-        print "middle down"
-
-    def OnMouseMiddleUp(self, event):
-        print "middle up"
-
-    def OnMouseRightDown(self, event):
-        print "right down"
-
-    def OnMouseRightUp(self, event):
-        print "right up"
-
+        self.OnSize(event)
+        
+    def OnMouse(self, event):
+        if (event.IsButton()):
+            button = event.GetButton()
+            if (button == wx.MOUSE_BTN_LEFT):
+                print "left",
+            elif (button == wx.MOUSE_BTN_MIDDLE):
+                print "middle",
+            elif (button == wx.MOUSE_BTN_RIGHT):
+                print "right",
+            print "is",
+            if (event.ButtonUp()):
+                print "up",
+            elif (event.ButtonDown()):
+                print "down",
+            (x, y) = event.GetPosition()
+            print "at (%d, %d)" % (x, y)
+            
 if __name__ == '__main__':
     app = wx.App()
-    frame = wx.Frame(None, -1, sys.argv[0])
+    frame = wx.Frame(None, -1, sys.argv[0], pos=(100,100), size=(320,240))
     canvas = MyCanvas(frame)
     frame.Show()
     app.MainLoop()

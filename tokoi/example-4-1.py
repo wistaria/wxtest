@@ -8,7 +8,7 @@ class MyCanvas(glcanvas.GLCanvas):
 
 if __name__ == '__main__':
     app = wx.App()
-    frame = wx.Frame(None, -1, sys.argv[0])
+    frame = wx.Frame(None, -1, sys.argv[0], size=(300,300))
     canvas = MyCanvas(frame)
     frame.Show()
     app.MainLoop()
