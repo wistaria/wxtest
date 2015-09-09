@@ -12,19 +12,21 @@ class MyCanvas(glcanvas.GLCanvas):
         self.Bind(wx.EVT_PAINT, self.OnPaint)
 
     def InitGL(self):
-        glClearColor(0, 0, 0, 1)
+        glClearColor(1.0, 1.0, 1.0, 1.0)
 
     def OnSize(self, event):
         w, h = self.GetClientSize()
         glViewport(0, 0, w, h)
+        event.Skip()
         
     def OnPaint(self, event):
         self.SetCurrent(self.context)
         if not self.initialized:
             self.InitGL()
             self.initialized = True
+        self.OnSize(event)
         glClear(GL_COLOR_BUFFER_BIT)
-        glRotated(25.0, 0.0, 1.0, 0.0)
+        glRotated(25.0, 0.0, 1.0, 0.0);
         glBegin(GL_POLYGON)
         glColor3d(1.0, 0.0, 0.0) # red
         glVertex2d(-0.9, -0.9)
@@ -36,10 +38,11 @@ class MyCanvas(glcanvas.GLCanvas):
         glVertex2d(-0.9, 0.9)
         glEnd()
         glFlush()
+        event.Skip()
 
 if __name__ == '__main__':
     app = wx.App()
-    frame = wx.Frame(None, -1, sys.argv[0])
+    frame = wx.Frame(None, -1, sys.argv[0], size=(300,300))
     canvas = MyCanvas(frame)
     frame.Show()
     app.MainLoop()
