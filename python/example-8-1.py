@@ -17,7 +17,6 @@ class MyCanvas(glcanvas.GLCanvas):
     def OnSize(self, event):
         w, h = self.GetClientSize()
         glViewport(0, 0, w, h)
-        event.Skip()
         
     def OnPaint(self, event):
         self.SetCurrent(self.context)
@@ -38,7 +37,6 @@ class MyCanvas(glcanvas.GLCanvas):
         glVertex2d(-0.9, 0.9)
         glEnd()
         glFlush()
-        event.Skip()
 
 if __name__ == '__main__':
     app = wx.App()

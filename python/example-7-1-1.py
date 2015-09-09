@@ -19,7 +19,6 @@ class MyCanvas(glcanvas.GLCanvas):
         w, h = self.GetClientSize()
         glViewport(0, 0, w, h)
         glLoadIdentity()
-        event.Skip()
         
     def OnPaint(self, event):
         self.SetCurrent(self.context)
@@ -29,7 +28,6 @@ class MyCanvas(glcanvas.GLCanvas):
         self.OnSize(event)
         glClear(GL_COLOR_BUFFER_BIT)
         glFlush()
-        event.Skip()
 
     def OnMouse(self, event):
         if event.IsButton():

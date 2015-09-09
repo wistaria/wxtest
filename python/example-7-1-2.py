@@ -20,7 +20,6 @@ class MyCanvas(glcanvas.GLCanvas):
         glViewport(0, 0, w, h)
         glLoadIdentity()
         glOrtho(-0.5, w - 0.5, h - 0.5, -0.5, -1.0, 1.0);
-        event.Skip()
         
     def OnPaint(self, event):
         self.SetCurrent(self.context)
@@ -30,7 +29,6 @@ class MyCanvas(glcanvas.GLCanvas):
         self.OnSize(event)
         glClear(GL_COLOR_BUFFER_BIT)
         glFlush()
-        event.Skip()
 
     def OnMouse(self, event):
         if event.IsButton() and event.GetButton() == wx.MOUSE_BTN_LEFT:
